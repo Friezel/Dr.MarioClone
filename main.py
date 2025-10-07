@@ -10,10 +10,12 @@ SCREEN_HEIGHT = 600
 screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 #player aanmaken (rood vierkant)
-player=pygame.Rect((300,250,50,50))
+player=pygame.image.load('../sprites/blok rood geel.png').convert()
 
 #De run variabele
 run = True
+
+x=0
 
 #Gameloop
 while(run==True):
@@ -21,7 +23,7 @@ while(run==True):
     screen.fill((0,0,0))
     
     #Tekend het vierkant
-    pygame.draw.rect(screen,(255,0,0),player)
+    screen.blit(player,(x,30))
 
     #Maakt het mogelijk om vierkant te bewegen
     key=pygame.key.get_pressed()
