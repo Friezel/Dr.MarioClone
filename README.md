@@ -1,16 +1,5 @@
 # Dr. mario clone
 
-**Inhoudstafel**
-
-- [[#Projectteam|Projectteam]]
-- [[#Beschrijving van het project|Beschrijving van het project]]
-	- [[#Beschrijving van het project#Wat willen we doen?|Wat willen we doen?]]
-	- [[#Beschrijving van het project#Wat is Dr.Mario|Wat is Dr.Mario]]
-	- [[#Beschrijving van het project#Doelstellingen|Doelstellingen]]
-	- [[#Beschrijving van het project#Uitbreidingsmogelijkheden|Uitbreidingsmogelijkheden]]
-- [[#Gebruikte libraries|Gebruikte libraries]]
-- [[#Bron van ons idee|Bron van ons idee]]
-
 
 # Projectteam
 - Dries Schreurs
