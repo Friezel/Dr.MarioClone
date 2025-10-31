@@ -20,14 +20,14 @@ clock=pygame.time.Clock()
 
 
 #font en letters
-font=pygame.font.Font("./Python/Pygame/Dr.MarioClone/Fonts/PixelifySans-VariableFont_wght.ttf",50)
+#font=pygame.font.Font("./Python/Pygame/Dr.MarioClone/Fonts/PixelifySans-VariableFont_wght.ttf",50)
 
 #De run variabele
 run = True
 
 grid=Functions.initGrid()
-grid[0][4]=1
-grid[0][5]=1
+grid[0][4]=2
+grid[0][5]=2
 
 #Gameloop
 while(run==True):
