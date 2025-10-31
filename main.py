@@ -18,6 +18,10 @@ screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 #Opzetten van clockset
 clock=pygame.time.Clock()
 
+#Events
+MOVEDOWN=pygame.USEREVENT+1
+movedownInterval=500
+pygame.time.set_timer(MOVEDOWN,movedownInterval)
 
 #font en letters
 #font=pygame.font.Font("./Python/Pygame/Dr.MarioClone/Fonts/PixelifySans-VariableFont_wght.ttf",50)
@@ -26,7 +30,7 @@ clock=pygame.time.Clock()
 run = True
 
 grid=Functions.initGrid()
-grid[0][4]=2
+grid[0][4]=3
 grid[0][5]=2
 
 #Gameloop
@@ -43,7 +47,9 @@ while(run==True):
                 Functions.moveObject(grid,"West")
             if event.key==pygame.K_RIGHT:
                 Functions.moveObject(grid,"East")
-    #Functions.moveObject(grid,"South")
+        if event.type==MOVEDOWN:
+            Functions.moveObject(grid,"South")
+    
     
     #Refrech het display + clocktick
     pygame.display.update()
