@@ -2,20 +2,24 @@
 #Inporteren van pygame
 import pygame
 import Functions
+
 #Initialiseren van pygame
 pygame.init()
 
-#titel
+#Titel
 pygame.display.set_caption('Dr.Mario Clone')
 
 #Schermgrootte & scherm aanmaken
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
+
+#Grid aanmaken en speelveld aanmaken
 PLAYAREA_WIDTH=100
 PLAYAREA_HEIGHT=240
+grid=Functions.initGrid()
 screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-#Opzetten van clockset
+#Opzetten van de clock
 clock=pygame.time.Clock()
 
 #Events
@@ -29,18 +33,24 @@ pygame.time.set_timer(MOVEDOWN,movedownInterval)
 #De run variabele
 run = True
 
-grid=Functions.initGrid()
+#Eerste blokje spawnen en als player zetten
 Functions.spawn(grid)
 player=Functions.vindObject(grid)
+
 #Gameloop
 while(run==True):
+    #Scherm tekenen
     screen.fill((0,0,0))
     Functions.maakGrid(grid,screen,PLAYAREA_HEIGHT,PLAYAREA_WIDTH)
+
     #Event Handeler
     for event in pygame.event.get():
-        #quit
+
+        #Quit
         if event.type==pygame.QUIT:
             run = False
+
+        #Controls
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_LEFT:
                 player=Functions.moveObject(grid,"West",player)
@@ -48,9 +58,15 @@ while(run==True):
                 player=Functions.moveObject(grid,"East",player)
             if event.key==pygame.K_UP:
                 player=Functions.moveObject(grid,"North",player)
+            if event.key==pygame.K_DOWN:
+                player=Functions.moveObject(grid,"South",player)
+    
+        #Eventtimer die blokje doet vallen
         if event.type==MOVEDOWN:
             if(Functions.detectblok(grid,player)!=True):
                 player=Functions.moveObject(grid,"South",player)
+    
+    #Spawner van nieuw blokje nadat oude gevallen is
     if(Functions.detectblok(grid,player)==True):
         Functions.spawn(grid)
         player=Functions.vindObject(grid)

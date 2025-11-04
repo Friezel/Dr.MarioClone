@@ -1,4 +1,6 @@
 import pygame
+
+#Functie die Grid aanmaakt
 def initGrid():
     grid=[]
     for i in range(20):
@@ -7,6 +9,8 @@ def initGrid():
             row.append(0)
         grid.append(row)
     return grid
+
+#Functie die kleur returned van gegeven waarde
 def getKleur(nummer):
     if(nummer==0):
         return "wit"
@@ -16,6 +20,8 @@ def getKleur(nummer):
         return "geel"
     if(nummer==3):
         return "blauw"
+
+#Functie die zoekt naar een object (enkel eerste rij)
 def vindObject(grid):
     loc=[]
     kleur=0
@@ -25,16 +31,21 @@ def vindObject(grid):
             yx=[0,j,kleur]
             loc.append(yx)
     return loc
+
+#Functie die de oriëntatie van een object teruggeeft
 def getorient(obj):
     if(obj[0][1]!=obj[1][1]):
         return "H"
     else:
         return "V"
+
+#Bewegen van een object naar een gegeven richting + draaien
 def moveObject(grid,dir,obj):
     eind=False
     kleur=0
     nieuw_pos=[]
     if(dir=="East"):
+        #Nog probleem met verschuiving
         for i in range(len(obj)):
             if(obj[i][1]==9):
                 eind=True
@@ -49,6 +60,7 @@ def moveObject(grid,dir,obj):
                 nieuw_pos.insert(0,item)
 
     if(dir=="West"):
+        #Nog probleem met verschuiving
         for i in range(len(obj)):
             if(obj[i][1]==0):
                 eind=True
@@ -108,7 +120,9 @@ def moveObject(grid,dir,obj):
                 grid[i[0]+1][i[1]]=kleur
                 item=[i[0]+1,i[1],i[2]]
                 nieuw_pos.insert(0,item)
-    return nieuw_pos           
+    return nieuw_pos
+
+#Tekenen van het grid met kleuren       
 def maakGrid(grid,screen,startx,starty):
     telx=0
     tely=0
@@ -138,6 +152,8 @@ def maakGrid(grid,screen,startx,starty):
         telx=0
         tely+=1
         y+=blokgrootte
+
+#Functie die blokken detetecteerd onder object
 def detectblok(grid,obj):
     detect=False
     if(getorient(obj)=="H"):
@@ -148,9 +164,17 @@ def detectblok(grid,obj):
             else:
                 detect=True
     else:
-        
+        if(obj[1][0]<19):
+            if(grid[obj[1][0]+1][obj[1][1]]!=0):
+                detect=True
+        else:
+            detect=True
     return detect
 
+#Functie die blok bovenaan doet spawnen
 def spawn(grid):
     grid[0][4]=1
     grid[0][5]=2
+
+
+                           
