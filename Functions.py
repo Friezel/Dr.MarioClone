@@ -19,56 +19,92 @@ def getKleur(nummer):
 def vindObject(grid):
     loc=[]
     kleur=0
-    for i in range(20):
-        for j in range(10):
-            if(grid[i][j]!=0):
-                kleur=grid[i][j]
-                yx=[i,j,kleur]
-                loc.append(yx)
+    for j in range(10):
+        if(grid[0][j]!=0):
+            kleur=grid[0][j]
+            yx=[0,j,kleur]
+            loc.append(yx)
     return loc
-def moveObject(grid,dir):
-    obj=vindObject(grid)
+def moveObject(grid,dir,obj):
     eind=False
     kleur=0
+    nieuw_pos=[]
     if(dir=="East"):
         for i in range(len(obj)):
             if(obj[i][1]==9):
                 eind=True
+                for i in obj:
+                    nieuw_pos.append(i)
         if(eind==False):
             for i in reversed(obj):
                 kleur=i[2]
                 grid[i[0]][i[1]+1]=kleur
+                item=[i[0],i[1]+1,i[2]]
                 grid[i[0]][i[1]]=0
+                nieuw_pos.insert(0,item)
+
     if(dir=="West"):
         for i in range(len(obj)):
             if(obj[i][1]==0):
                 eind=True
+                for i in obj:
+                    nieuw_pos.append(i)
         if(eind==False):
             for i in obj:
                 kleur=i[2]
                 grid[i[0]][i[1]]=0
+                item=[i[0],i[1]-1,i[2]]
                 grid[i[0]][i[1]-1]=kleur
+                nieuw_pos.append(item)
     if(dir=="North"):
         for i in range(len(obj)):
             if(obj[i][0]==0):
                 eind=True
+                for i in obj:
+                    nieuw_pos.append(i)
         if(eind==False):
-            for i in obj:
-                kleur=i[2]
-                grid[i[0]][i[1]]=0
-                grid[i[0]-1][i[1]]=kleur
+            tel=0
+            if(obj[0][1]!=obj[1][1]):
+                for i in obj:
+                    if(tel==0):
+                        kleur=i[2]
+                        grid[i[0]][i[1]]=0
+                        grid[i[0]-1][i[1]]=kleur
+                        item=[i[0]-1,i[1],i[2]]
+                        nieuw_pos.append(item)
+                    if(tel==1):
+                        kleur=i[2]
+                        grid[i[0]][i[1]]=0
+                        item=[i[0],i[1]-1,i[2]]
+                        grid[i[0]][i[1]-1]=kleur
+                        nieuw_pos.append(item)
+                    tel+=1
+            else:
+                for i in obj:
+                    if(tel==0):
+                        kleur=i[2]
+                        grid[i[0]][i[1]]=0
+                        grid[i[0]+1][i[1]+1]=kleur
+                        item=[i[0]+1,i[1]+1,i[2]]
+                        nieuw_pos.append(item)
+                    if(tel==1):
+                        nieuw_pos.insert(0,i)
+                    tel+=1
+
     if(dir=="South"):
         for i in range(len(obj)):
             if(obj[i][0]==19):
                 eind=True
+                for i in obj:
+                    nieuw_pos.append(i)
         if(eind==False):
             for i in reversed(obj):
                 kleur=i[2]
                 grid[i[0]][i[1]]=0
                 grid[i[0]+1][i[1]]=kleur
-    
-                
-
+                item=[i[0]+1,i[1],i[2]]
+                nieuw_pos.insert(0,item)
+    return nieuw_pos           
 def maakGrid(grid,screen,startx,starty):
     telx=0
     tely=0
