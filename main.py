@@ -30,8 +30,7 @@ pygame.time.set_timer(MOVEDOWN,movedownInterval)
 run = True
 
 grid=Functions.initGrid()
-grid[0][3]=1
-grid[0][4]=2
+Functions.spawn(grid)
 player=Functions.vindObject(grid)
 #Gameloop
 while(run==True):
@@ -50,8 +49,11 @@ while(run==True):
             if event.key==pygame.K_UP:
                 player=Functions.moveObject(grid,"North",player)
         if event.type==MOVEDOWN:
-            player=Functions.moveObject(grid,"South",player)
-    
+            if(Functions.detectblok(grid,player)!=True):
+                player=Functions.moveObject(grid,"South",player)
+    if(Functions.detectblok(grid,player)==True):
+        Functions.spawn(grid)
+        player=Functions.vindObject(grid)
     
     #Refrech het display + clocktick
     pygame.display.update()

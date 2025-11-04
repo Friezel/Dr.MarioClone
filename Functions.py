@@ -25,6 +25,11 @@ def vindObject(grid):
             yx=[0,j,kleur]
             loc.append(yx)
     return loc
+def getorient(obj):
+    if(obj[0][1]!=obj[1][1]):
+        return "H"
+    else:
+        return "V"
 def moveObject(grid,dir,obj):
     eind=False
     kleur=0
@@ -64,7 +69,7 @@ def moveObject(grid,dir,obj):
                     nieuw_pos.append(i)
         if(eind==False):
             tel=0
-            if(obj[0][1]!=obj[1][1]):
+            if(getorient(obj)=="H"):
                 for i in obj:
                     if(tel==0):
                         kleur=i[2]
@@ -90,7 +95,6 @@ def moveObject(grid,dir,obj):
                     if(tel==1):
                         nieuw_pos.insert(0,i)
                     tel+=1
-
     if(dir=="South"):
         for i in range(len(obj)):
             if(obj[i][0]==19):
@@ -134,3 +138,19 @@ def maakGrid(grid,screen,startx,starty):
         telx=0
         tely+=1
         y+=blokgrootte
+def detectblok(grid,obj):
+    detect=False
+    if(getorient(obj)=="H"):
+        for i in obj:
+            if(i[0]<19):
+                if(grid[i[0]+1][i[1]]!=0):
+                    detect=True
+            else:
+                detect=True
+    else:
+        
+    return detect
+
+def spawn(grid):
+    grid[0][4]=1
+    grid[0][5]=2
