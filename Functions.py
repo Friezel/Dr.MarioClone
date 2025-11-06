@@ -175,6 +175,26 @@ def detectblok(grid,obj):
 def spawn(grid):
     grid[0][4]=1
     grid[0][5]=2
-
+def countblok(grid):
+    tel=0
+    gevonden=[]
+    for i in range(20):
+        for j in range(10):
+            if(grid[i][j]!=0):
+                if(tel==0):
+                    temp=[i,j]
+                    gevonden.append(temp)
+                    tel+=1
+                elif(tel<=4):
+                    if(grid[i][j]==grid[i][j-1]):
+                        temp=[i,j]
+                        gevonden.append(temp)
+                        tel+=1
+                    else:
+                        gevonden.clear()
+                        tel=0
+                elif(tel>=4):
+                    for i in gevonden:
+                        grid[i[0]][i[1]]=0
 
                            

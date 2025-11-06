@@ -68,6 +68,7 @@ while(run==True):
     
     #Spawner van nieuw blokje nadat oude gevallen is
     if(Functions.detectblok(grid,player)==True):
+        Functions.countblok(grid)
         Functions.spawn(grid)
         player=Functions.vindObject(grid)
     
