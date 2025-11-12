@@ -195,6 +195,4 @@ def countblok(grid):
                         tel=0
                 elif(tel>=4):
                     for i in gevonden:
-                        grid[i[0]][i[1]]=0
-
-                           
+                        grid[i[0]][i[1]]=0                         

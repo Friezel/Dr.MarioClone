@@ -2,6 +2,7 @@
 #Inporteren van pygame
 import pygame
 import Functions
+from sys import exit
 
 #Initialiseren van pygame
 pygame.init()
@@ -28,27 +29,41 @@ movedownInterval=500
 pygame.time.set_timer(MOVEDOWN,movedownInterval)
 
 #font en letters
-#font=pygame.font.Font("./Python/Pygame/Dr.MarioClone/Fonts/PixelifySans-VariableFont_wght.ttf",50)
+font=pygame.font.Font("Fonts/PixelifySans-VariableFont_wght.ttf",50)
 
 #De run variabele
-run = True
+run = False
 
 #Eerste blokje spawnen en als player zetten
 Functions.spawn(grid)
 player=Functions.vindObject(grid)
 
+# Intro screen
+mario = pygame.image.load('sprites/Dr.Mario_Pixel.png').convert_alpha()
+mario = pygame.transform.rotozoom(mario,0,0.5)
+mario_rect = mario.get_rect(center = (400,300))
+
+text = font.render('Dr. Mario Clone',False,(111,196,169))
+text_rect = text.get_rect(center = (400,100))
+
+start_surf = font.render('START',False,(111,196,169))
+start_rect = start_surf.get_rect(center = (400,500))
+
 #Gameloop
-while(run==True):
-    #Scherm tekenen
-    screen.fill((0,0,0))
-    Functions.maakGrid(grid,screen,PLAYAREA_HEIGHT,PLAYAREA_WIDTH)
+while True:
+    
 
     #Event Handeler
     for event in pygame.event.get():
 
         #Quit
         if event.type==pygame.QUIT:
-            run = False
+            pygame.quit()
+            exit()
+
+        if event.type==pygame.MOUSEBUTTONDOWN:
+            if start_rect.collidepoint(event.pos):
+                run=True
 
         #Controls
         if event.type==pygame.KEYDOWN:
@@ -60,6 +75,8 @@ while(run==True):
                 player=Functions.moveObject(grid,"North",player)
             if event.key==pygame.K_DOWN:
                 player=Functions.moveObject(grid,"South",player)
+            if event.key==pygame.K_SPACE:
+                run=True
     
         #Eventtimer die blokje doet vallen
         if event.type==MOVEDOWN:
@@ -72,6 +89,17 @@ while(run==True):
         Functions.spawn(grid)
         player=Functions.vindObject(grid)
     
+    if run:
+        #Scherm tekenen
+        screen.fill((0,0,0))
+        Functions.maakGrid(grid,screen,PLAYAREA_HEIGHT,PLAYAREA_WIDTH)
+
+    else:
+        screen.fill((94,129,162))
+        screen.blit(mario,mario_rect)
+        screen.blit(text,text_rect)
+        screen.blit(start_surf,start_rect)
+
     #Refrech het display + clocktick
     pygame.display.update()
     clock.tick(60)
