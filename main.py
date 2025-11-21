@@ -69,8 +69,11 @@ while(run==True):
     #Spawner van nieuw blokje nadat oude gevallen is
     if(Functions.detectblok(grid,player)==True):
         Functions.countblok(grid)
+        Functions.gravity(grid)
         Functions.spawn(grid)
         player=Functions.vindObject(grid)
+    
+    
     
     #Refrech het display + clocktick
     pygame.display.update()

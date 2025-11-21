@@ -1,4 +1,5 @@
 import pygame
+import random
 
 #Functie die Grid aanmaakt
 def initGrid():
@@ -173,8 +174,10 @@ def detectblok(grid,obj):
 
 #Functie die blok bovenaan doet spawnen
 def spawn(grid):
-    grid[0][4]=1
-    grid[0][5]=2
+    blok1=random.randint(1,3)
+    blok2=random.randint(1,3)
+    grid[0][4]=blok1
+    grid[0][5]=blok2
 def countblok(grid):
     tel=0
     gevonden=[]
@@ -193,8 +196,67 @@ def countblok(grid):
                     else:
                         gevonden.clear()
                         tel=0
-                elif(tel>=4):
-                    for i in gevonden:
-                        grid[i[0]][i[1]]=0
+            if(tel>=4):
+                for z in gevonden:
+                    grid[z[0]][z[1]]=0
+                tel=0
+    i=0
+    for i in range(10):
+        for j in range(20):
+            if(grid[j][i]!=0):
+                if(tel==0):
+                    temp=[j,i]
+                    gevonden.append(temp)
+                    tel+=1
+                elif(tel!=0):
+                    if(grid[j][i]==grid[j-1][i]):
+                        temp=[j,i]
+                        gevonden.append(temp)
+                        tel+=1
+                    else:
+                        gevonden.clear()
+                        tel=0
+            elif(tel>4):
+                for z in gevonden:
+                    grid[z[0]][z[1]]=0
+                tel=0
+def gravity(grid):
+    for i in range(19):
+        for j in range(10):
+            if(grid[i][j]!=0):
+                if(grid[i+1][j]==0):
+                    if(j==0):
+                        if(grid[i][j+1]==0):
+                            kleur=grid[i][j]
+                            temp=[i,j,kleur]
+                            obj=[]
+                            obj.append(temp)
+                            nieuw=[i+1,j]
+                            while(grid[nieuw[0]][nieuw[1]]==0):
+                                nieuw=moveObject(grid,"South",obj)
+                                if(nieuw[0]!=19):
+                                    nieuw=[nieuw[0+1],nieuw[1]]
+                    elif(j==9):
+                        if(grid[i][j-1]==0):
+                            kleur=grid[i][j]
+                            temp=[i,j,kleur]
+                            obj=[]
+                            obj.append(temp)
+                            nieuw=[i+1,j]
+                            while(grid[nieuw[0]][nieuw[1]]==0):
+                                nieuw=moveObject(grid,"South",obj)
+                                if(nieuw[0]!=19):
+                                    nieuw=[nieuw[0+1],nieuw[1]]
+                    else:
+                        if(grid[i][j+1]==0 or grid[i][j-1]==0):
+                            kleur=grid[i][j]
+                            temp=[i,j,kleur]
+                            obj=[]
+                            obj.append(temp)
+                            nieuw=[[i+1,j,kleur]]
+                            while(grid[nieuw[0][0]][nieuw[0][1]]==0):
+                                nieuw=moveObject(grid,"South",obj)
+                                if(nieuw[0][0]!=19):
+                                    nieuw=[[nieuw[0][0]+1,nieuw[0][1]]]
 
                            
