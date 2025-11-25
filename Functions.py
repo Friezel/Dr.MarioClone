@@ -1,7 +1,7 @@
 import pygame
 import random
 
-#Functie die Grid aanmaakt
+# Functie die Grid aanmaakt
 def initGrid():
     grid=[]
     for i in range(20):
@@ -11,7 +11,7 @@ def initGrid():
         grid.append(row)
     return grid
 
-#Functie die kleur returned van gegeven waarde
+# Functie die kleur returned van gegeven waarde
 def getKleur(nummer):
     if(nummer==0):
         return "wit"
@@ -22,7 +22,7 @@ def getKleur(nummer):
     if(nummer==3):
         return "blauw"
 
-#Functie die zoekt naar een object (enkel eerste rij)
+# Functie die zoekt naar een object (enkel eerste rij)
 def vindObject(grid):
     loc=[]
     kleur=0
@@ -33,20 +33,20 @@ def vindObject(grid):
             loc.append(yx)
     return loc
 
-#Functie die de oriëntatie van een object teruggeeft
+# Functie die de oriëntatie van een object teruggeeft
 def getorient(obj):
     if(obj[0][1]!=obj[1][1]):
         return "H"
     else:
         return "V"
 
-#Bewegen van een object naar een gegeven richting + draaien
+# Bewegen van een object naar een gegeven richting + draaien
 def moveObject(grid,dir,obj):
     eind=False
     kleur=0
     nieuw_pos=[]
     if(dir=="East"):
-        #Nog probleem met verschuiving
+        # Nog probleem met verschuiving
         for i in range(len(obj)):
             if(obj[i][1]==9):
                 eind=True
@@ -61,7 +61,7 @@ def moveObject(grid,dir,obj):
                 nieuw_pos.insert(0,item)
 
     if(dir=="West"):
-        #Nog probleem met verschuiving
+        # Nog probleem met verschuiving
         for i in range(len(obj)):
             if(obj[i][1]==0):
                 eind=True
@@ -123,7 +123,7 @@ def moveObject(grid,dir,obj):
                 nieuw_pos.insert(0,item)
     return nieuw_pos
 
-#Tekenen van het grid met kleuren       
+# Tekenen van het grid met kleuren       
 def maakGrid(grid,screen,startx,starty):
     telx=0
     tely=0
@@ -154,7 +154,7 @@ def maakGrid(grid,screen,startx,starty):
         tely+=1
         y+=blokgrootte
 
-#Functie die blokken detetecteerd onder object
+# Functie die blokken detetecteerd onder object
 def detectblok(grid,obj):
     detect=False
     if(getorient(obj)=="H"):
@@ -172,12 +172,14 @@ def detectblok(grid,obj):
             detect=True
     return detect
 
-#Functie die blok bovenaan doet spawnen
+# Functie die blok bovenaan doet spawnen
 def spawn(grid):
     blok1=random.randint(1,3)
     blok2=random.randint(1,3)
     grid[0][4]=blok1
     grid[0][5]=blok2
+
+# Functie die checkt of er ergens 4 blokjes van dezelfde kleur naast of op elkaar zijn
 def countblok(grid):
     tel=0
     gevonden=[]
@@ -188,7 +190,7 @@ def countblok(grid):
                     temp=[i,j]
                     gevonden.append(temp)
                     tel+=1
-                elif(tel<=4):
+                elif(0<tel<4):
                     if(grid[i][j]==grid[i][j-1]):
                         temp=[i,j]
                         gevonden.append(temp)
@@ -196,10 +198,10 @@ def countblok(grid):
                     else:
                         gevonden.clear()
                         tel=0
-            if(tel>=4):
-                for z in gevonden:
-                    grid[z[0]][z[1]]=0
-                tel=0
+                elif(tel>=4):
+                    for z in gevonden:
+                        grid[z[0]][z[1]]=0
+                    tel=0
     i=0
     for i in range(10):
         for j in range(20):
@@ -208,7 +210,7 @@ def countblok(grid):
                     temp=[j,i]
                     gevonden.append(temp)
                     tel+=1
-                elif(tel!=0):
+                elif(0<tel<4):
                     if(grid[j][i]==grid[j-1][i]):
                         temp=[j,i]
                         gevonden.append(temp)
@@ -216,45 +218,47 @@ def countblok(grid):
                     else:
                         gevonden.clear()
                         tel=0
-            elif(tel>4):
-                for z in gevonden:
-                    grid[z[0]][z[1]]=0
-                tel=0
-def gravity(grid):
-    for i in range(19):
-        for j in range(10):
-            if(grid[i][j]!=0):
-                if(grid[i+1][j]==0):
-                    if(j==0):
-                        if(grid[i][j+1]==0):
-                            kleur=grid[i][j]
-                            temp=[i,j,kleur]
-                            obj=[]
-                            obj.append(temp)
-                            nieuw=[i+1,j]
-                            while(grid[nieuw[0]][nieuw[1]]==0):
-                                nieuw=moveObject(grid,"South",obj)
-                                if(nieuw[0]!=19):
-                                    nieuw=[nieuw[0+1],nieuw[1]]
-                    elif(j==9):
-                        if(grid[i][j-1]==0):
-                            kleur=grid[i][j]
-                            temp=[i,j,kleur]
-                            obj=[]
-                            obj.append(temp)
-                            nieuw=[i+1,j]
-                            while(grid[nieuw[0]][nieuw[1]]==0):
-                                nieuw=moveObject(grid,"South",obj)
-                                if(nieuw[0]!=19):
-                                    nieuw=[nieuw[0+1],nieuw[1]]
-                    else:
-                        if(grid[i][j+1]==0 or grid[i][j-1]==0):
-                            kleur=grid[i][j]
-                            temp=[i,j,kleur]
-                            obj=[]
-                            obj.append(temp)
-                            nieuw=[[i+1,j,kleur]]
-                            while(grid[nieuw[0][0]][nieuw[0][1]]==0):
-                                nieuw=moveObject(grid,"South",obj)
-                                if(nieuw[0][0]!=19):
-                                    nieuw=[[nieuw[0][0]+1,nieuw[0][1]]]
+                elif(tel>=4):
+                    for z in gevonden:
+                        grid[z[0]][z[1]]=0
+                    tel=0
+
+# Functie die zorgt voor een zwaartekracht effect
+# def gravity(grid):
+#     for i in range(19):
+#         for j in range(10):
+#             if(grid[i][j]!=0):
+#                 if(grid[i+1][j]==0):
+#                     if(j==0):
+#                         if(grid[i][j+1]==0):
+#                             kleur=grid[i][j]
+#                             temp=[i,j,kleur]
+#                             obj=[]
+#                             obj.append(temp)
+#                             nieuw=[i+1,j]
+#                             while(grid[nieuw[0]][nieuw[1]]==0):
+#                                 nieuw=moveObject(grid,"South",obj)
+#                                 if(nieuw[0]!=19):
+#                                     nieuw=[nieuw[0+1],nieuw[1]]
+#                     elif(j==9):
+#                         if(grid[i][j-1]==0):
+#                             kleur=grid[i][j]
+#                             temp=[i,j,kleur]
+#                             obj=[]
+#                             obj.append(temp)
+#                             nieuw=[i+1,j]
+#                             while(grid[nieuw[0]][nieuw[1]]==0):
+#                                 nieuw=moveObject(grid,"South",obj)
+#                                 if(nieuw[0]!=19):
+#                                     nieuw=[nieuw[0+1],nieuw[1]]
+#                     else:
+#                         if(grid[i][j+1]==0 or grid[i][j-1]==0):
+#                             kleur=grid[i][j]
+#                             temp=[i,j,kleur]
+#                             obj=[]
+#                             obj.append(temp)
+#                             nieuw=[[i+1,j,kleur]]
+#                             while(grid[nieuw[0][0]][nieuw[0][1]]==0):
+#                                 nieuw=moveObject(grid,"South",obj)
+#                                 if(nieuw[0][0]!=19):
+#                                     nieuw=[[nieuw[0][0]+1,nieuw[0][1]]]

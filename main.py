@@ -112,13 +112,13 @@ while(True):
         # Spawner van nieuw blokje nadat oude gevallen is
         if(Functions.detectblok(grid,player)==True):
             Functions.countblok(grid)
-            Functions.gravity(grid)
+            # Functions.gravity(grid)
             Functions.spawn(grid)
             player=Functions.vindObject(grid)
     
     if run:
         screen.fill((0,0,0))
-        Functions.maakGrid(grid,screen,PLAYAREA_HEIGHT, PLAYAREA_WIDTH)
+        Functions.maakGrid(grid,screen,PLAYAREA_HEIGHT,PLAYAREA_WIDTH)
         score = 0
 
         # Inkleding
@@ -132,6 +132,7 @@ while(True):
         screen.blit(top_number,top_number_rect)
 
         # Score
+        
 
     else: 
         screen.fill((94,129,162))
@@ -142,5 +143,3 @@ while(True):
     # Refrech het display + clocktick
     pygame.display.update()
     clock.tick(60)
-# Zet pygame uit nadat de loop uit is
-pygame.quit
