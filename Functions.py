@@ -258,5 +258,3 @@ def gravity(grid):
                                 nieuw=moveObject(grid,"South",obj)
                                 if(nieuw[0][0]!=19):
                                     nieuw=[[nieuw[0][0]+1,nieuw[0][1]]]
-
-                           
