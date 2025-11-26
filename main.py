@@ -92,10 +92,6 @@ home_button_rect = home_button.get_rect(center = (100,50))
 
 # Gameloop
 while(True):
-    # Scherm tekenen
-    screen.fill((0,0,0))
-    Functions.maakGrid(grid,screen,PLAYAREA_HEIGHT,PLAYAREA_WIDTH)
-
     # Event Handeler
     for event in pygame.event.get():
 
