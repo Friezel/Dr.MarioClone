@@ -174,15 +174,21 @@ def detectblok(grid,obj):
 
 # Functie die blok bovenaan doet spawnen
 def spawn(grid):
-    blok1=random.randint(1,3)
-    blok2=random.randint(1,3)
-    grid[0][4]=blok1
-    grid[0][5]=blok2
+    for i in range(10):
+        if (grid[0][i]) != 0:
+            return 0
+    else:
+        blok1=random.randint(1,3)
+        blok2=random.randint(1,3)
+        grid[0][4]=blok1
+        grid[0][5]=blok2
 
 # Functie die checkt of er ergens 4 blokjes van dezelfde kleur naast of op elkaar zijn
 def countblok(grid):
     tel=0
     gevonden=[]
+    points = 0
+    removed = 0
     for i in range(20):
         for j in range(10):
             if(grid[i][j]!=0):
@@ -201,6 +207,7 @@ def countblok(grid):
                 elif(tel>=4):
                     for z in gevonden:
                         grid[z[0]][z[1]]=0
+                        removed += 1
                     tel=0
     i=0
     for i in range(10):
@@ -221,44 +228,20 @@ def countblok(grid):
                 elif(tel>=4):
                     for z in gevonden:
                         grid[z[0]][z[1]]=0
+                        removed += 1
                     tel=0
+    return removed
 
 # Functie die zorgt voor een zwaartekracht effect
-# def gravity(grid):
-#     for i in range(19):
-#         for j in range(10):
-#             if(grid[i][j]!=0):
-#                 if(grid[i+1][j]==0):
-#                     if(j==0):
-#                         if(grid[i][j+1]==0):
-#                             kleur=grid[i][j]
-#                             temp=[i,j,kleur]
-#                             obj=[]
-#                             obj.append(temp)
-#                             nieuw=[i+1,j]
-#                             while(grid[nieuw[0]][nieuw[1]]==0):
-#                                 nieuw=moveObject(grid,"South",obj)
-#                                 if(nieuw[0]!=19):
-#                                     nieuw=[nieuw[0+1],nieuw[1]]
-#                     elif(j==9):
-#                         if(grid[i][j-1]==0):
-#                             kleur=grid[i][j]
-#                             temp=[i,j,kleur]
-#                             obj=[]
-#                             obj.append(temp)
-#                             nieuw=[i+1,j]
-#                             while(grid[nieuw[0]][nieuw[1]]==0):
-#                                 nieuw=moveObject(grid,"South",obj)
-#                                 if(nieuw[0]!=19):
-#                                     nieuw=[nieuw[0+1],nieuw[1]]
-#                     else:
-#                         if(grid[i][j+1]==0 or grid[i][j-1]==0):
-#                             kleur=grid[i][j]
-#                             temp=[i,j,kleur]
-#                             obj=[]
-#                             obj.append(temp)
-#                             nieuw=[[i+1,j,kleur]]
-#                             while(grid[nieuw[0][0]][nieuw[0][1]]==0):
-#                                 nieuw=moveObject(grid,"South",obj)
-#                                 if(nieuw[0][0]!=19):
-#                                     nieuw=[[nieuw[0][0]+1,nieuw[0][1]]]
+def gravity(grid):
+
+    for x in range(10):
+        # Start vanonder, werk naar boven
+        for y in range(19, 0, -1):
+            if grid[y][x] != 0:
+                drop_y = y
+                # Laat zakken zolang er een leeg vakje onder is
+                while drop_y + 1 < 20 and grid[drop_y + 1][x] == 0:
+                    grid[drop_y + 1][x] = grid[drop_y][x]
+                    grid[drop_y][x] = 0
+                    drop_y += 1
