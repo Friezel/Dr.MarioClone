@@ -234,10 +234,9 @@ def countblok(grid):
 
 # Functie die zorgt voor een zwaartekracht effect
 def gravity(grid):
-
     for x in range(10):
-        # Start vanonder, werk naar boven
-        for y in range(19, 0, -1):
+        # Start vanonder en werk naar boven
+        for y in range(19, 1, -1):
             if grid[y][x] != 0:
                 drop_y = y
                 # Laat zakken zolang er een leeg vakje onder is

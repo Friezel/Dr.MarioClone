@@ -147,9 +147,17 @@ while(True):
             lost=Functions.spawn(grid)
             player=Functions.vindObject(grid)
 
-        if lost == 0:
-                game_over=True
-                run=False
+    if lost == 0:
+        game_over=True
+        run=False
+
+    #Score
+    removed = Functions.countblok(grid)
+    if score > topscore: topscore = score
+
+    if removed > 0:
+        Functions.gravity(grid)
+        score += (removed*10)
         
     # Define score text
     score_message = font.render('Your score:',False,'Black')
@@ -173,14 +181,6 @@ while(True):
         screen.fill((0,0,0))
         Functions.maakGrid(grid,screen,PLAYAREA_HEIGHT,PLAYAREA_WIDTH)
 
-        #Score
-        removed = Functions.countblok(grid)
-        if score > topscore: topscore = score
-
-        if removed > 0:
-            Functions.gravity(grid)
-            score += 10
-
         # Decorations
         mario_rect.midbottom = (600,425)
         screen.blit(mario,mario_rect)
@@ -202,13 +202,11 @@ while(True):
         screen.blit(text,text_rect)
         screen.blit(start_surf,start_rect)
 
-        top_message_rect.x = 125
-        top_message_rect.y = 220
         top_message = font.render('Top:',False,(111,196,169))
+        top_message_rect = top_message.get_rect(center = (150,260))
         screen.blit(top_message,top_message_rect)
-        top_number_rect.x = 125
-        top_number_rect.y = 280
         top_number = font.render(f'{topscore}',False,(111,196,169))
+        top_number_rect = top_number.get_rect(center = (150,320))
         screen.blit(top_number,top_number_rect)
 
     elif pause == True:
