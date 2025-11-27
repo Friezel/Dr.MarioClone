@@ -110,12 +110,14 @@ while(True):
             if stop_rect.collidepoint(event.pos):
                 home=True
                 run=False
+                Functions.clearGrid(grid)
             if pause_button_rect.collidepoint(event.pos):
                 pause=True
                 run=False
             if home_button_rect.collidepoint(event.pos):
                 home=True
                 game_over=False
+                Functions.clearGrid(grid)
                 
         # Controls
         if event.type==pygame.KEYDOWN:

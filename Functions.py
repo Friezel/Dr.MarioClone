@@ -244,3 +244,9 @@ def gravity(grid):
                     grid[drop_y + 1][x] = grid[drop_y][x]
                     grid[drop_y][x] = 0
                     drop_y += 1
+
+# Functie die het bord leeg maakt
+def clearGrid(grid):
+    for x in range(20):
+        for y in range(10):
+            grid[x][y] = 0
