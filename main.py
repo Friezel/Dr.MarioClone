@@ -132,9 +132,11 @@ while(True):
             if event.key==pygame.K_SPACE and home == True:
                 run=True
                 home=False
+                Functions.clearGrid(grid)
             if event.key==pygame.K_SPACE and game_over == True:
                 run=True 
                 game_over=False
+                Functions.clearGrid(grid)
             if event.key==pygame.K_SPACE and pause == True:
                 run=True
                 pause=False

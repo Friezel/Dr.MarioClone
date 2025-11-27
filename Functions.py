@@ -187,7 +187,6 @@ def spawn(grid):
 def countblok(grid):
     tel=0
     gevonden=[]
-    points = 0
     removed = 0
     for i in range(20):
         for j in range(10):
