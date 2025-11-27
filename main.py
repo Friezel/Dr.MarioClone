@@ -133,7 +133,7 @@ while(True):
                 run=True
                 home=False
             if event.key==pygame.K_SPACE and game_over == True:
-                run=True
+                run=True 
                 game_over=False
             if event.key==pygame.K_SPACE and pause == True:
                 run=True
@@ -148,7 +148,7 @@ while(True):
         if(Functions.detectblok(grid,player)==True):
             lost=Functions.spawn(grid)
             player=Functions.vindObject(grid)
-
+            
     if lost == 0:
         game_over=True
         run=False
@@ -216,7 +216,7 @@ while(True):
         screen.blit(paused,paused_rect)
         screen.blit(cont,cont_rect)
     
-    else:
+    elif game_over == True:
         screen.fill('Black')
         screen.blit(gameover,gameover_rect)
         screen.blit(home_button,home_button_rect)
