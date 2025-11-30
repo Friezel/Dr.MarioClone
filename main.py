@@ -156,11 +156,11 @@ while(True):
         run=False
 
     #Score
-    removed = Functions.countblok(grid)
+    removed, gevonden = Functions.countblok(grid)
     if score > topscore: topscore = score
 
-    if removed > 0:
-        Functions.gravity(grid)
+    if removed > 0 and gevonden:
+        Functions.gravity(grid,gevonden)
         score += (removed*10)
         
     # Define score text

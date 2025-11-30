@@ -229,13 +229,15 @@ def countblok(grid):
                         grid[z[0]][z[1]]=0
                         removed += 1
                     tel=0
-    return removed
+    return removed, gevonden
 
 # Functie die zorgt voor een zwaartekracht effect
-def gravity(grid):
-    for x in range(10):
+def gravity(grid,gevonden):
+    xs = [z[1] for z in gevonden]
+    ys = [z[0] for z in gevonden]
+    for x in range(min(xs),max(xs)+1):    
         # Start vanonder en werk naar boven
-        for y in range(19, 1, -1):
+        for y in range(max(ys), 1, -1):
             if grid[y][x] != 0:
                 drop_y = y
                 # Laat zakken zolang er een leeg vakje onder is
