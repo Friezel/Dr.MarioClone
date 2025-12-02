@@ -177,11 +177,11 @@ def spawn(grid):
     for i in range(10):
         if (grid[0][i]) != 0:
             return 0
-    else:
-        blok1=random.randint(1,3)
-        blok2=random.randint(1,3)
-        grid[0][4]=blok1
-        grid[0][5]=blok2
+        else:
+            blok1=random.randint(1,3)
+            blok2=random.randint(1,3)
+            grid[0][4]=blok1
+            grid[0][5]=blok2
 
 # Functie die checkt of er ergens 4 blokjes van dezelfde kleur naast of op elkaar zijn
 def countblok(grid):

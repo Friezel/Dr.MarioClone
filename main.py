@@ -154,6 +154,7 @@ while(True):
     if lost == 0:
         game_over=True
         run=False
+        lost = 1
 
     #Score
     removed, gevonden = Functions.countblok(grid)
