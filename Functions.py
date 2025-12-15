@@ -174,28 +174,25 @@ def detectblok(grid,obj):
 
 # Functie die blok bovenaan doet spawnen
 def spawn(grid):
-    for i in range(10):
-        if (grid[0][i]) != 0:
-            return 0
-        else:
-            blok1=random.randint(1,3)
-            blok2=random.randint(1,3)
-            grid[0][4]=blok1
-            grid[0][5]=blok2
+    blok1=random.randint(1,3)
+    blok2=random.randint(1,3)
+    grid[0][4]=blok1
+    grid[0][5]=blok2
 
 # Functie die checkt of er ergens 4 blokjes van dezelfde kleur naast of op elkaar zijn
 def countblok(grid):
-    tel=0
-    gevonden=[]
+    
     removed = 0
     for i in range(20):
+        tel=0
+        gevonden=[]
         for j in range(10):
             if(grid[i][j]!=0):
                 if(tel==0):
                     temp=[i,j]
                     gevonden.append(temp)
                     tel+=1
-                elif(0<tel<4):
+                elif(0<tel):
                     if(grid[i][j]==grid[i][j-1]):
                         temp=[i,j]
                         gevonden.append(temp)
@@ -203,20 +200,27 @@ def countblok(grid):
                     else:
                         gevonden.clear()
                         tel=0
-                elif(tel>=4):
-                    for z in gevonden:
-                        grid[z[0]][z[1]]=0
-                        removed += 1
-                    tel=0
+            elif(tel>=4):
+                for z in gevonden:
+                    grid[z[0]][z[1]]=0
+                    removed += 1
+                tel=0
+        if(tel>=4):
+            for z in gevonden:
+                    grid[z[0]][z[1]]=0
+                    removed += 1
+            tel=0 
     i=0
     for i in range(10):
+        tel=0
+        gevonden=[]
         for j in range(20):
             if(grid[j][i]!=0):
                 if(tel==0):
                     temp=[j,i]
                     gevonden.append(temp)
                     tel+=1
-                elif(0<tel<4):
+                elif(0<tel):
                     if(grid[j][i]==grid[j-1][i]):
                         temp=[j,i]
                         gevonden.append(temp)
@@ -224,27 +228,56 @@ def countblok(grid):
                     else:
                         gevonden.clear()
                         tel=0
-                elif(tel>=4):
-                    for z in gevonden:
-                        grid[z[0]][z[1]]=0
-                        removed += 1
-                    tel=0
-    return removed, gevonden
+            elif(tel>=4):
+                for z in gevonden:
+                    grid[z[0]][z[1]]=0
+                    removed += 1
+                tel=0
+        if(tel>=4):
+            for z in gevonden:
+                    grid[z[0]][z[1]]=0
+                    removed += 1
+            tel=0
+    return removed
 
 # Functie die zorgt voor een zwaartekracht effect
-def gravity(grid,gevonden):
-    xs = [z[1] for z in gevonden]
-    ys = [z[0] for z in gevonden]
-    for x in range(min(xs),max(xs)+1):    
-        # Start vanonder en werk naar boven
-        for y in range(max(ys), 1, -1):
-            if grid[y][x] != 0:
-                drop_y = y
-                # Laat zakken zolang er een leeg vakje onder is
-                while drop_y + 1 < 20 and grid[drop_y + 1][x] == 0:
-                    grid[drop_y + 1][x] = grid[drop_y][x]
-                    grid[drop_y][x] = 0
-                    drop_y += 1
+def gravity(grid):
+    gevallen=True
+    while(gevallen==True):
+        gevallen=False
+        for j in range(18,-1,-1):
+            for i in range(10):
+                if(grid[j][i]!=0 and grid[j+1][i]==0):
+                    if(i<9 and grid[j][i+1]!=0):
+                        if(grid[j+1][i]==0 and grid[j+1][i+1]==0):
+                            grid[j+1][i] = grid[j][i]
+                            grid[j+1][i+1] = grid[j][i+1]
+                            grid[j][i] = 0
+                            grid[j][i+1] = 0
+                            gevallen = True
+                    elif(j<19 and grid[j+1][i]):
+                        boven=j-1
+                        if(boven>=0 and grid[boven][i]!=0):
+                            grid[j+1][i]=grid[j][i]
+                            grid[j][i]=0
+                            gevallen=True
+                    else:
+                        grid[j+1][i]=grid[j][i]
+                        grid[j][i]=0
+                        gevallen=True
+def height(grid):
+    for i in range(10):
+        tel=0
+        gevonden=[]
+        for j in range(20):
+            if(grid[j][i]!=0):
+                temp=[j,i]
+                gevonden.append(temp)
+                tel+=1
+        if(tel>=19):
+            return 0
+    return 1
+                
 
 # Functie die het bord leeg maakt
 def clearGrid(grid):

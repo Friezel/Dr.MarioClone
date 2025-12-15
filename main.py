@@ -148,7 +148,13 @@ while(True):
 
         # Spawner van nieuw blokje nadat oude gevallen is
         if(Functions.detectblok(grid,player)==True):
-            lost=Functions.spawn(grid)
+            lost=Functions.height(grid)
+            removed = Functions.countblok(grid)
+            if removed > 0:
+                Functions.gravity(grid)
+                score += (removed*10)
+                removed=0
+            Functions.spawn(grid)
             player=Functions.vindObject(grid)
             
     if lost == 0:
@@ -157,12 +163,9 @@ while(True):
         lost = 1
 
     #Score
-    removed, gevonden = Functions.countblok(grid)
     if score > topscore: topscore = score
 
-    if removed > 0 and gevonden:
-        Functions.gravity(grid,gevonden)
-        score += (removed*10)
+    
         
     # Define score text
     score_message = font.render('Your score:',False,'Black')
