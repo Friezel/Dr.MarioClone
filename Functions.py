@@ -46,7 +46,6 @@ def moveObject(grid,dir,obj):
     kleur=0
     nieuw_pos=[]
     if(dir=="East"):
-        # Nog probleem met verschuiving
         for i in range(len(obj)):
             if(obj[i][1]==9):
                 eind=True
@@ -61,7 +60,6 @@ def moveObject(grid,dir,obj):
                 nieuw_pos.insert(0,item)
 
     if(dir=="West"):
-        # Nog probleem met verschuiving
         for i in range(len(obj)):
             if(obj[i][1]==0):
                 eind=True
