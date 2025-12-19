@@ -18,7 +18,6 @@ SCREEN_HEIGHT = 600
 # Grid aanmaken en speelveld aanmaken
 PLAYAREA_WIDTH=100
 PLAYAREA_HEIGHT=240
-grid=Functions.initGrid()
 screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Opzetten van de clock
@@ -50,6 +49,7 @@ pause = False
 game_over = False
 
 # Eerste blokje spawnen en als player zetten
+grid=Functions.initGrid()
 Functions.spawn(grid)
 player=Functions.vindObject(grid)
 
@@ -107,6 +107,9 @@ while(True):
             if start_rect.collidepoint(event.pos):
                 run=True
                 home=False
+                grid=Functions.initGrid()
+                Functions.spawn(grid)
+                player=Functions.vindObject(grid)
             if stop_rect.collidepoint(event.pos):
                 home=True
                 run=False
@@ -130,11 +133,15 @@ while(True):
             if event.key==pygame.K_SPACE and home == True:
                 run=True
                 home=False
-                Functions.clearGrid(grid)
+                grid=Functions.initGrid()
+                Functions.spawn(grid)
+                player=Functions.vindObject(grid)
             if event.key==pygame.K_SPACE and game_over == True:
                 run=True 
                 game_over=False
-                Functions.clearGrid(grid)
+                grid=Functions.initGrid()
+                Functions.spawn(grid)
+                player=Functions.vindObject(grid)
             if event.key==pygame.K_SPACE and pause == True:
                 run=True
                 pause=False
