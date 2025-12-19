@@ -121,6 +121,7 @@ def moveObject(grid,dir,obj):
                 grid[i[0]+1][i[1]]=kleur
                 item=[i[0]+1,i[1],i[2]]
                 nieuw_pos.insert(0,item)
+
     return nieuw_pos
 
 # Tekenen van het grid met kleuren       

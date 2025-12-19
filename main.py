@@ -110,14 +110,12 @@ while(True):
             if stop_rect.collidepoint(event.pos):
                 home=True
                 run=False
-                Functions.clearGrid(grid)
             if pause_button_rect.collidepoint(event.pos):
                 pause=True
                 run=False
             if home_button_rect.collidepoint(event.pos):
                 home=True
                 game_over=False
-                Functions.clearGrid(grid)
                 
         # Controls
         if event.type==pygame.KEYDOWN:
@@ -165,8 +163,6 @@ while(True):
     #Score
     if score > topscore: topscore = score
 
-    
-        
     # Define score text
     score_message = font.render('Your score:',False,'Black')
     score_message = pygame.transform.rotozoom(score_message,0,0.4)
